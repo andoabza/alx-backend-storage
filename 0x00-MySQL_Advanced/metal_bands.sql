@@ -1,12 +1,13 @@
--- Show and add orders
-SELECT * FROM items;
-SELECT * FROM orders;
+SELECT * FROM users;
 
-INSERT INTO orders (item_name, number) VALUES ('apple', 1);
-INSERT INTO orders (item_name, number) VALUES ('apple', 3);
-INSERT INTO orders (item_name, number) VALUES ('pear', 2);
+UPDATE users SET valid_email = 1 WHERE email = "bob@dylan.com";
+UPDATE users SET email = "sylvie+new@dylan.com" WHERE email = "sylvie@dylan.com";
+UPDATE users SET name = "Jannis" WHERE email = "jeanne@dylan.com";
 
 SELECT "--";
+SELECT * FROM users;
 
-SELECT * FROM items;
-SELECT * FROM orders;
+UPDATE users SET email = "bob@dylan.com" WHERE email = "bob@dylan.com";
+
+SELECT "--";
+SELECT * FROM users;
