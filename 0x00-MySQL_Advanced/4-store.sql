@@ -1,4 +1,4 @@
--- 4. Trigger that decreases the quantity of an item after adding an order
+-- Trigger that decreases the quantity of an item after adding an order
 
 CREATE TRIGGER update_quantity AFTER INSERT ON orders
 FOR EACH ROW
