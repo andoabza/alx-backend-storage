@@ -5,7 +5,7 @@ CREATE FUNCTION safeDiv (a INT, b INT)
     DETERMINISTIC
     BEGIN
         DECLARE result INT;
-            SET result = a DIV b;
+            SET result = a / b;
         RETURN result;
     END$$
 DELIMITER ;
