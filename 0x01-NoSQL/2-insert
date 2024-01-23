@@ -1,7 +1,7 @@
 // insert value
 
-db.school.insertOne(
+db.school.insert(
     {
-        name: 'Holberton school'
+        name: "Holberton school"
     }
 )
