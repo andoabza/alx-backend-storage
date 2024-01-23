@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """connect to mongodb"""
-from pymongo import MongoClient
 
 
 if __name__ == "__main__":
