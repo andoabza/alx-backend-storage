@@ -3,6 +3,4 @@
 
 
 def update_topics(mongo_collection, name, topics):
-    myquery = { "name": name }
-    newvalues = { 'topics': topics }
-    return mongo_collection.update_one(myquery, newvalues)
+    mongo_collection.update({"name": name},{"$set":{"topics": topics}})
