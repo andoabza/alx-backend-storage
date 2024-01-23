@@ -2,10 +2,11 @@
 """connect to mongodb"""
 
 
-if __name__ == "__main__":
-    def list_all(mongo_collection):
-        """return collection"""    
-        school_collection = mongo_collection
-        schools = school_collection.find()
-        return schools
+
+def list_all(mongo_collection):
+    """return collection"""    
+    school_collection = mongo_collection
+    schools = school_collection.find()
+    return schools
+
             
