@@ -1,6 +1,6 @@
 // update school 
 
-db.school.updateMany({
+db.school.updateOne({
     name: "Holberton school"
 }, {
     $set: {
