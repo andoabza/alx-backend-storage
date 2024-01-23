@@ -1,0 +1,3 @@
+// show name
+
+db.school.find({category: "Holberton school"})
