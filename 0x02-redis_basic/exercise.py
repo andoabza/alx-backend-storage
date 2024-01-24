@@ -33,7 +33,7 @@ def call_history(method: Callable) -> Callable:
 
 def replay(method: Callable):
     '''replay history'''
-    r = redis.Redis()  
+    r = redis.Redis()
     method_name = method.__qualname__
     count = r.get(method_name).decode('utf-8')
     inputs = r.lrange(method_name + ":inputs", 0, -1)
