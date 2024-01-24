@@ -6,6 +6,17 @@ from typing import Union, Callable, Optional
 from functools import wraps
 
 
+def count_calls(method: Callable) -> Callable:
+    '''A decorator that counts calls made to the method'''
+    key = method.__qualname__
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+
+    return wrapper
+
 
 class Cache:
     '''class to store data in redis'''
@@ -14,19 +25,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    @staticmethod
-    def count_calls(method):
-        @wraps(method)
-        def wrapper(self, *args, **kwargs):
-            # Use the qualified name of the method as the key
-            key = f"{method.__module__}.{method.__qualname__}"
-            # Increment the count for this key
-            count = self.r.incr(key)
-            # Call the original method and return its result
-            result = method(self, *args, **kwargs)
-            return result
-        return wrapper
-
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         '''store data in redis'''
         key = str(uuid.uuid4())
