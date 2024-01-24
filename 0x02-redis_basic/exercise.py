@@ -35,8 +35,6 @@ class Cache:
         return self.get(key, int)
     
     @property
-    def count_calls(self, key: Callable = None) -> int:
+    def count_calls(self: Callable) -> Callable:
         '''count calls'''
-        if key:
-            return self.get(key, int)
-        return 0
+        return self._redis.count(self)
