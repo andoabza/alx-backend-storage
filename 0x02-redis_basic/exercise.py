@@ -17,6 +17,7 @@ def count_calls(method: Callable) -> Callable:
 
     return wrapper
 
+
 def call_history(method: Callable) -> Callable:
     '''A decorator that stores the history of inputs and outputs'''
     @wraps(method)
@@ -29,6 +30,7 @@ def call_history(method: Callable) -> Callable:
 
     return wrapper
 
+
 def replay(method: Callable):
         '''replay history'''
         r = redis.Redis()  
@@ -40,6 +42,7 @@ def replay(method: Callable):
         for i, o in zip(inputs, outputs):
             print("{}(*{}) -> {}".format(method_name, i.decode('utf-8'),
                                          o.decode('utf-8')))
+
 
 class Cache:
     '''class to store data in redis'''
