@@ -29,6 +29,18 @@ def call_history(method: Callable) -> Callable:
 
     return wrapper
 
+def replay(method: Callable):
+        '''replay history'''
+        r = redis.Redis()  
+        method_name = method.__qualname__
+        count = r.get(method_name).decode('utf-8')
+        inputs = r.lrange(method_name + ":inputs", 0, -1)
+        outputs = r.lrange(method_name + ":outputs", 0, -1)
+        print("{} was called {} times:".format(method_name, count))
+        for i, o in zip(inputs, outputs):
+            print("{}(*{}) -> {}".format(method_name, i.decode('utf-8'),
+                                         o.decode('utf-8')))
+
 class Cache:
     '''class to store data in redis'''
     def __init__(self):
@@ -60,16 +72,4 @@ class Cache:
         '''get data from redis as int'''
         return self.get(key, int)
 
-    def replay(self):
-        '''replay history'''
-        methods = self._redis.keys("*:inputs")
-        for key in methods:
-            method = key.decode("utf-8")[:-7]
-            inputs = self._redis.lrange(key, 0, -1)
-            outputs = self._redis.lrange(method + ":outputs", 0, -1)
-            print("{} was called {} times:".format(method,
-                                                   len(inputs.decode("utf-8"))))
-            for i, o in zip(inputs, outputs):
-                print("{}(*{}) -> {}".format(method,
-                                             i.decode("utf-8"),
-                                             o.decode("utf-8"))
+    
