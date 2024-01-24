@@ -4,5 +4,6 @@ import requests
 
 
 def get_page(url: str) -> str:
+    '''return content and count'''
     r = requests.get('http://slowwly.robertomurray.co.uk')
     return r.content
