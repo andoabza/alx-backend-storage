@@ -13,6 +13,6 @@ class Cache:
 
     def store(self, data):
         to_byte = bytes(str(uuid.uuid1()), 'utf-8')
-
-        result = self._redis.set(data, to_byte)
-        return result.get(data)
+        new_data = bytes(data)
+        self._redis.set(new_data, to_byte)
+        return self._redis.get(new_data)
