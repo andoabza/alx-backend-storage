@@ -33,3 +33,10 @@ class Cache:
     def get_int(self, key: str) -> int:
         '''get data from redis as int'''
         return self.get(key, int)
+    
+    @property
+    def count_calls(self, key: Callable = None) -> int:
+        '''count calls'''
+        if key:
+            return self.get(key, int)
+        return 0
