@@ -20,4 +20,4 @@ class Cache:
         result = self._redis.get(new_data)
         self._redis.set(to_byte, new_data)
         bew = result.decode('utf-8')
-        return bew
+        return str(bew)
