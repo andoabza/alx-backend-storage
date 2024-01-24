@@ -60,4 +60,16 @@ class Cache:
         '''get data from redis as int'''
         return self.get(key, int)
 
-    
+    def replay(self):
+        '''replay history'''
+        methods = self._redis.keys("*:inputs")
+        for key in methods:
+            method = key.decode("utf-8")[:-7]
+            inputs = self._redis.lrange(key, 0, -1)
+            outputs = self._redis.lrange(method + ":outputs", 0, -1)
+            print("{} was called {} times:".format(method,
+                                                   len(inputs.decode("utf-8"))))
+            for i, o in zip(inputs, outputs):
+                print("{}(*{}) -> {}".format(method,
+                                             i.decode("utf-8"),
+                                             o.decode("utf-8"))
