@@ -3,6 +3,7 @@
 import redis
 import uuid
 
+
 class Cache:
     '''a class that will insert data'''
     def __init__(self):
