@@ -3,6 +3,8 @@
 import redis
 import uuid
 from typing import Union, Callable, Optional
+from functools import wraps
+
 
 
 class Cache:
@@ -11,6 +13,19 @@ class Cache:
         '''constructor'''
         self._redis = redis.Redis()
         self._redis.flushdb()
+
+    @staticmethod
+    def count_calls(method):
+        @wraps(method)
+        def wrapper(self, *args, **kwargs):
+            # Use the qualified name of the method as the key
+            key = f"{method.__module__}.{method.__qualname__}"
+            # Increment the count for this key
+            count = self.r.incr(key)
+            # Call the original method and return its result
+            result = method(self, *args, **kwargs)
+            return result
+        return wrapper
 
     def store(self, data: Union[str, bytes, int, float]) -> str:
         '''store data in redis'''
@@ -33,8 +48,5 @@ class Cache:
     def get_int(self, key: str) -> int:
         '''get data from redis as int'''
         return self.get(key, int)
+
     
-    @property
-    def count_calls(self: Callable) -> Callable:
-        '''count calls'''
-        return self._redis.count(self)
